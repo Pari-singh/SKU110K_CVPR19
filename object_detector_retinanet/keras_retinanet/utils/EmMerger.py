@@ -110,7 +110,7 @@ class DuplicateMerger(object):
 
     def find_new_candidates(self, contours, heat_map, data, original_detection_centers, image):
         candidates = []
-        for contour_i, contour in enumerate(contours[1]):
+        for contour_i, contour in enumerate(contours[0]):
             contour_bounding_rect = cv2.boundingRect(contour)
 
             contour_bbox = extract_boxes_from_edge_boxes(numpy.array(contour_bounding_rect))[0]
@@ -200,7 +200,7 @@ class DuplicateMerger(object):
             ellipse_mask = cv2.fillPoly(local_m, [poly], (1, 1, 1))
             contours = cv2.findContours(ellipse_mask.copy(), cv2.RETR_EXTERNAL,
                                         cv2.CHAIN_APPROX_SIMPLE)
-            cnts.append(contours[1][0])
+            cnts.append(contours[0][0])
         center_points = mu.copy()
         distances = scipy.spatial.distance.cdist(center_points, center_points)
         scaled_distances = numpy.ndarray(shape=[k, k], dtype=numpy.float64)
